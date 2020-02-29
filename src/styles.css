@@ -2,3 +2,19 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+.listItemStyles {
+  padding-top: 20px;
+}
+
+.draggedOver {
+  padding-top: 10px;
+}
+
+.color:active {
+  background-color: yellow;
+}
+
+.listItem:active {
+  color: red;
+}

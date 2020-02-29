@@ -41,26 +41,46 @@ class TodoForm extends React.Component {
   }
 }
 
-const TodoItem = props => (
-  <li>
-    {props.item.text}{" "}
-    <button
-      onClick={() => {
-        console.log(props.item.id);
-        props.removeTodo(props.item.id);
+const TodoItem = props => {
+  const [draggedOver, setDraggedOver] = React.useState(false);
+  const [color, setColor] = React.useState(false);
+  return (
+    <li
+      draggable={true}
+      onDragStart={() => {
+        console.log("DRAGGED ITEM", props.item);
+        setColor(true);
       }}
-    >
-      X
-    </button>
-    <button
-      onClick={(id, val) =>
-        props.changeItem(props.item.id, prompt("Insert new name"))
+      onDragEnd={() => setColor(false)}
+      onDragEnter={() => setDraggedOver(true)}
+      onDragLeave={() => setDraggedOver(false)}
+      onDragOver={e => e.preventDefault()}
+      onDrop={() => console.log("the item was DROPPED on ITEM", props.item)}
+      className={
+        "listItem" +
+        (draggedOver ? " draggedOver" : "") +
+        (color ? " color" : "")
       }
     >
-      Change
-    </button>
-  </li>
-);
+      {props.item.text}{" "}
+      <button
+        onClick={() => {
+          console.log(props.item.id);
+          props.removeTodo(props.item.id);
+        }}
+      >
+        X
+      </button>
+      <button
+        onClick={(id, val) =>
+          props.changeItem(props.item.id, prompt("Insert new name"))
+        }
+      >
+        Change
+      </button>
+    </li>
+  );
+};
 
 const TodoList = props => (
   <div>
